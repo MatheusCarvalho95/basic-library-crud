@@ -1,8 +1,14 @@
 import { Book } from 'src/books/entities/book.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
-export class Author {
+export class Author extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

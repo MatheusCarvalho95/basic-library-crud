@@ -1,7 +1,6 @@
 import {
-  BadRequestException,
+  ConflictException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,7 +25,7 @@ export class AuthorsService {
       where: { name: newAuthorRequest.name },
     });
     if (existingAuthor) {
-      throw new BadRequestException(
+      throw new ConflictException(
         `There is already an Author with name: ${newAuthorRequest.name} `,
       );
     }
@@ -63,7 +62,7 @@ export class AuthorsService {
     });
 
     if (authorWithSameName.id !== id) {
-      throw new BadRequestException(
+      throw new ConflictException(
         `There is another author with the name: ${updateAuthorRequest.name}`,
       );
     }

@@ -7,7 +7,11 @@ import { AuthorsModule } from './authors/authors.module';
 import { Book } from './books/entities/book.entity';
 import { Author } from './authors/entities/author.entity';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
+const entities = [Book, Author, User];
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,10 +24,12 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Book, Author],
+      entities,
     }),
     BooksModule,
     AuthorsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

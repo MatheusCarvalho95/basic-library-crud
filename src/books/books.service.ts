@@ -1,14 +1,11 @@
 import {
-  BadRequestException,
+  ConflictException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
-  ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthorRepository } from 'src/authors/author.repository';
 import { Author } from 'src/authors/entities/author.entity';
-import { DeepPartial } from 'typeorm';
 import { BookRepository } from './books.repository';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -29,7 +26,7 @@ export class BooksService {
       where: { title: newBookRequest.title },
     });
     if (existingBook) {
-      throw new BadRequestException(
+      throw new ConflictException(
         `There is already a book with the name: ${newBookRequest.title} `,
       );
     }
@@ -74,7 +71,7 @@ export class BooksService {
     });
 
     if (bookWithSameName.id !== id) {
-      throw new BadRequestException(
+      throw new ConflictException(
         `There is another book with the title: ${updateBookRequest.title}`,
       );
     }
