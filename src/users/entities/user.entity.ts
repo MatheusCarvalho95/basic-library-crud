@@ -5,15 +5,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { UserRoles } from '../users.enuns';
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({ type: 'uuid', generated: 'uuid' })
+  id: string;
 
   @Column()
   name: string;
@@ -26,6 +29,9 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  @Column({ type: 'enum', enum: UserRoles })
+  role: UserRoles;
 
   @Column()
   @CreateDateColumn()
